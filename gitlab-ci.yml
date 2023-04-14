@@ -1,0 +1,6 @@
+deploy:
+  image: mwienk/docker-lftp:latest #docker image for uploading file
+  script:
+    - lftp -c "set sftp:auto-confirm yes; open -u $USERNAME,$PASSWORD sftp://$HOST -p 22; mirror -Rnev -v ./ /app_directory  --parallel=50 --exclude-glob .git* --exclude .git/ --exclude file_or_diractory_excluded"
+  only:
+    - master
